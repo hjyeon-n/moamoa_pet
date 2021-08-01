@@ -21,32 +21,32 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 public class ChartController {
-	@Autowired 
+	@Autowired
 	ChartService chartService;
-	
+
 	@GetMapping("/")
-    public RedirectView home(ModelAndView mv) {
+	public RedirectView home(ModelAndView mv) {
 		return new RedirectView("/kChart");
-    }
+	}
 
 	@GetMapping("/kChart")
-    public ModelAndView kChart(ModelAndView mv, @PageableDefault Pageable pageable) {
+	public ModelAndView kChart(ModelAndView mv, @PageableDefault Pageable pageable) {
 		Page<Domestic> kChart = chartService.getKBoardList(pageable);
 		mv.addObject("pets", kChart.getContent());
-        mv.addObject("petList", kChart);
-		mv.setViewName("kChart");
+		mv.addObject("petList", kChart);
+		mv.setViewName("thymeleaf/test");
 		return mv;
-    }
-	
+	}
+
 	@GetMapping("/eChart")
-    public ModelAndView eChart(ModelAndView mv, @PageableDefault Pageable pageable) {
+	public ModelAndView eChart(ModelAndView mv, @PageableDefault Pageable pageable) {
 		Page<Overseas> eChart = chartService.getEBoardList(pageable);
 		mv.addObject("pets", eChart.getContent());
-        mv.addObject("petList", eChart);
+		mv.addObject("petList", eChart);
 		mv.setViewName("eChart");
 		return mv;
-    }
-	
+	}
+
 	@GetMapping("/kChart/search")
 	public ModelAndView searchKchart(ModelAndView mv, @RequestParam(value="keyword") String keyword) {
 		Domestic result = chartService.searchKchart(keyword);
@@ -58,7 +58,7 @@ public class ChartController {
 		mv.setViewName("kSearch");
 		return mv;
 	}
-	
+
 	@GetMapping("/eChart/search")
 	public ModelAndView searchEchart(ModelAndView mv, @RequestParam(value="keyword") String keyword) {
 		Overseas result = chartService.searchEchart(keyword);
